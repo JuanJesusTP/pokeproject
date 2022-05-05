@@ -1,0 +1,22 @@
+<ng-container *ngIf="loading">
+    <div id="loader">
+        <img id="loading" src="../../../../assets/images/global/poke_spinner.gif"/>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+    <div id="filter-container">
+        <select id="filter" [(ngModel)]="filterSelected" (change)="changeFilter()">
+            <option *ngFor="let option of filterOptions; let i=index">{{option}}</option>                
+        </select>
+    </div>
+    <div id="cards-list">
+        <ng-container *ngFor="let pokemon of pokemonDisplay; let i = index">
+            <app-poke-card
+                [pokeData] = "pokemon"
+            ></app-poke-card>
+        </ng-container>
+    </div>
+    <div id="load-container">
+        <button id="load-button" (click)="loadMorePokemon()"><span>Load more Pokémon </span></button>
+    </div>
+</ng-container>

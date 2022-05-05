@@ -1,0 +1,20 @@
+<div class="poke-card">
+    <div class="image" (click)="pokeC.viewDetails(pokeData.pokeid, router)">
+        <img class="img-pokemon" [src]="pokeData.img" (error)="changeImg()"/>
+    </div>
+    <div class="pokedata">
+        <div class="pokeid">
+            <span>#{{pokeData.pokeid}}</span>
+        </div>
+        <div class="pokename">
+            <span>{{this.pipeCapitalize.transform(pokeData.name)}}</span>
+        </div>
+        <div class="poketype-container">        
+            <ng-container *ngFor="let type of pokeData.types">
+                <div class="poketype" [ngStyle]="{'background-color': pokeC.setColor(type)}">
+                    <h6>{{this.pipeCapitalize.transform(type)}}</h6>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

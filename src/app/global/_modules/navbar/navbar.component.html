@@ -1,0 +1,9 @@
+<nav>
+    <div id="search-container">
+        <input id="search-field" type="text" placeholder="Search by name or number" [(ngModel)]="this.pokeid">
+        <button id="search-btn"  type="button" (click)="searchPokemon()"><i class="fa fa-search"></i></button>
+    </div>
+    <div id="surprise-container">
+        <button id="random-btn" type="button" (click)="randomPokemon()"><i class="fa fa-random" ></i> Surprise me!</button>
+    </div>
+</nav>

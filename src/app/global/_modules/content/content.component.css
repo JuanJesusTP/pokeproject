@@ -1,0 +1,31 @@
+main {
+    background-color: rgb(190, 18, 25); 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+#content-container {
+    align-items: center;
+    background-color: white;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    min-height: 350px;
+    border: 10px solid;
+    border-color: #bbb3b3;
+    width: 90%;
+}
+
+@media all and (max-width: 1130px) { 
+    #content-container {
+        width: 85%;
+    }
+}
+
+@media all and (max-width: 580px) { 
+    #content-container {
+        width: 90%;
+    }
+}

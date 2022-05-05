@@ -1,0 +1,177 @@
+<ng-container *ngIf="this.pokeDetails.name != '' && !loading">
+    <div id="nav-container">
+        <div class="nav-btn-container">
+            <button type="button" id="before-btn" class="nav-btn" *ngIf="pokeDetails.prevPoke.hasOwnProperty('pokeid')" (click)="this.pokeC.viewDetails(pokeDetails.prevPoke.pokeid, router)">
+                <span><i class="fa fa-chevron-left"></i></span><p class="pokename">{{this.pipeCapitalize.transform(pokeDetails.prevPoke.name)}}</p><p>#{{pokeDetails.prevPoke.pokeid}}</p>
+            </button>
+        </div>
+        <div id="poke-number">
+            <div id="number">
+                <span>{{pokeDetails.pokeid}}</span>
+            </div>
+        </div>
+        <div class="nav-btn-container">
+            <button type="button" id="next-btn" class="nav-btn" *ngIf="pokeDetails.nextPoke.hasOwnProperty('pokeid')" (click)="this.pokeC.viewDetails(pokeDetails.nextPoke.pokeid, router)">
+                <p>#{{pokeDetails.nextPoke.pokeid}}</p><p class="pokename">{{this.pipeCapitalize.transform(pokeDetails.nextPoke.name)}}</p><span><i class="fa fa-chevron-right"></i></span>
+            </button>
+        </div>
+    </div>
+    <div id="pokesname">
+        <div id="name">
+            <span>{{this.pipeCapitalize.transform(pokeDetails.name)}}</span>
+        </div>
+    </div>
+    <div id="data-container">
+        <div id="left-container">
+            <div id="poke-img">
+                <img id="pokeball" src="../../../../assets/images/detailsPage/pokeball_background.png"/>
+                <img id="pokemon" src="{{pokeDetails.img}}" (error)="changeImg()"/>
+            </div>
+            <div id="stats-container">
+                <div id="stats-title">
+                    <span>Stats</span>
+                </div>
+                <ng-container *ngFor="let stat of statsConf; let i = index">
+                    <div class="poke-stat">
+                        <div class="stat-title">
+                            <span>{{stat.title}}</span>
+                        </div>
+                        <div class="value">
+                            <div class="stat-bar">
+                                <div [id]="stat.style" [ngStyle]="{'width': pokeDetails.stats[i]+'px'}"></div>
+                            </div>
+                            <div class="stat-value">
+                                <span>{{pokeDetails.stats[i]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div id="right-container">
+            <div id="poke-description">
+                <p>{{pokeDetails.description}}</p>
+            </div>
+            <div id="poke-type">
+                <div class="type-title">
+                    <span>Type</span>
+                </div>
+                <div class="type-container">
+                    <ng-container *ngFor="let type of pokeDetails.types">
+                        <div class="type" [ngStyle]="{'background-color': pokeC.setColor(type)}">
+                            <span class="type-text">{{this.pipeCapitalize.transform(type)}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="poke-weaknes">
+                <div class="type-title">
+                    <span>Weaknesses</span>
+                </div>
+                <div class="type-container">
+                    <ng-container *ngFor="let weakness of pokeDetails.weaknesses">
+                        <div class="type" [ngStyle]="{'background-color': pokeC.setColor(weakness)}">
+                            <span class="type-text">{{this.pipeCapitalize.transform(weakness)}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="poke-data">
+                <div class="data-container">
+                    <div class="subtitle">
+                        <span>Height</span>
+                    </div>
+                    <div class="data">
+                        <span>{{this.pipeHeight.transform(pokeDetails.height)}}</span>
+                    </div>
+                </div>
+                <div class="data-container">
+                    <div class="subtitle">
+                        <span>Weight</span>
+                    </div>
+                    <div class="data">
+                        <span>{{this.pipeWeight.transform(pokeDetails.weight)}} lbs</span>
+                    </div>
+                </div>
+                <div class="data-container">
+                    <div class="subtitle">
+                        <span>Gender</span>
+                    </div>
+                    <div class="data">
+                        <span><i class="fa fa-mars" *ngIf="pokeDetails.genders.includes('male')"></i> </span>
+                        <span><i class="fa fa-venus" *ngIf="pokeDetails.genders.includes('female')"></i></span>
+                        <span><i class="fa fa-genderless" *ngIf="pokeDetails.genders.includes('genderless')"></i></span>
+                        <span><i class="fa fa-question" *ngIf="pokeDetails.genders.length === 0"></i></span>
+                    </div>
+                </div>
+                <div class="data-container-category">
+                    <div class="subtitle">
+                        <span>Category</span>
+                    </div>
+                    <div class="data small">
+                        <span>{{pokeDetails.specie}}</span>
+                    </div>
+                </div>
+                <div class="data-container-abilities">
+                    <div class="subtitle">
+                        <span>Abilities</span>
+                    </div>
+                    <div class="data small ability">
+                        <span>{{this.pipeCapitalize.transform(pokeDetails.abilities[0])}}</span><span *ngIf="pokeDetails.abilities[1]">{{this.pipeCapitalize.transform(pokeDetails.abilities[1])}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="evolution-container">
+        <div id="evolution-title">
+            <span>Evolution</span>
+        </div>
+        <div id="evolution-txt" *ngIf="pokeDetails.evolution.length <= 1">
+            <span>This Pokémon does not evolve.</span>
+        </div>
+        <div id="evolution-chain">
+            <ng-container *ngFor="let pokemon of pokeDetails.evolution; let i = index">
+                <div class="arrow-container" *ngIf="(pokeDetails.evolution.length > 4 && i == 1) || (i > 0 && i < 3 && pokeDetails.evolution.length <= 4)">
+                    <img src="../../../../assets/images/detailsPage/side-arrow.png" class="arrow"/>
+                </div>
+                <div class="pipe-container" *ngIf="(i >= 3) || (pokeDetails.evolution.length > 4 && i >= 2)">
+                    <img src="../../../../assets/images/detailsPage/vertical-pipe.png" class="pipe"/>
+                </div>
+                <app-evolution-card
+                    [pokeData]="pokemon"
+                ></app-evolution-card>
+            </ng-container>
+        </div>
+    </div>
+    <div id="back-container">
+        <button id="poke-btn" (click)="this.pokeC.goHome(router)">
+            Explore more Pokémon
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="this.pokeDetails.name == '' && !loading">
+    <div id="message-container">
+        <div id="text-container">
+            <span id="error-message">No Pokémon Matched Your Search!</span>
+            <button id="poke-btn" (click)="this.pokeC.goHome(router)">
+                Explore more Pokémon
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="loading">
+    <div id="loader">
+        <img id="loading" src="../../../../assets/images/global/poke_spinner.gif"/>
+    </div>
+</ng-container>
